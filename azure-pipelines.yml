@@ -66,3 +66,10 @@ jobs:
       architecture: 'x64'
 
   # Add additional tasks to run using each Python version in the matrix above
+  
+  - bash: echo "##vso[task.prependpath]$CONDA/bin"
+  displayName: Add conda to PATH
+
+- bash: conda create --yes --quiet --name myEnvironment python=$PYTHON_VERSION # [other packages ...]
+  displayName: Create Anaconda environment
+  
