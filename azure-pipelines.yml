@@ -73,3 +73,12 @@ jobs:
 - bash: conda create --yes --quiet --name myEnvironment python=$PYTHON_VERSION # [other packages ...]
   displayName: Create Anaconda environment
   
+- bash: |
+    source activate myEnvironment
+    pytest -m unit --junitxml=junit/unit-test.xml
+  displayName: 'Unit tests'
+
+- bash: |
+    source activate myEnvironment
+    pytest -m integration --junitxml=junit/integration-test.xml
+  displayName: 'Integration tests'
