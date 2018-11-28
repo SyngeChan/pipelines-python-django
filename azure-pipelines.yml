@@ -44,28 +44,3 @@ steps:
     testResultsFiles: "**/TEST-*.xml"
     testRunTitle: 'Python $(PYTHON_VERSION)'
 
-
-
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '$(python.version)'
-      architecture: 'x64'
-
-  # Add additional tasks to run using each Python version in the matrix above
-  
-  - bash: echo "##vso[task.prependpath]$CONDA/bin"
-  displayName: Add conda to PATH
-
-- bash: conda create --yes --quiet --name myEnvironment python=$PYTHON_VERSION # [other packages ...]
-  displayName: Create Anaconda environment
-  
-- bash: |
-    source activate myEnvironment
-    pytest -m unit --junitxml=junit/unit-test.xml
-  displayName: 'Unit tests'
-
-- bash: |
-    source activate myEnvironment
-    pytest -m integration --junitxml=junit/integration-test.xml
-  displayName: 'Integration tests'
